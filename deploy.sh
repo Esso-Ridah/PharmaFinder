@@ -106,6 +106,15 @@ else
     print_success "Curl déjà installé"
 fi
 
+# SQLite3 (toujours nécessaire pour l'initialisation de la base)
+if ! command -v sqlite3 &> /dev/null; then
+    print_info "Installation de SQLite3..."
+    sudo apt install -y sqlite3
+    print_success "SQLite3 installé"
+else
+    print_success "SQLite3 déjà installé"
+fi
+
 if [ "$USE_DOCKER" = true ]; then
     # ===== Installation Docker =====
     print_step "Installation de Docker"
