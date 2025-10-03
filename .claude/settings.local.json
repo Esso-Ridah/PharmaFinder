@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/erb/MyApps/Claude.ai/**)",
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pip install:*)",
+      "Bash(sqlite3:*)",
+      "Bash(pkill:*)",
+      "Bash(lsof:*)",
+      "Bash(find:*)",
+      "Bash(kill:*)",
+      "Bash(npx tsc:*)",
+      "Bash(xargs kill:*)",
+      "Bash(PYTHONPATH=$PWD uvicorn main:app --reload --host 0.0.0.0 --port 8000)",
+      "Bash(awk:*)",
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(npm install:*)",
+      "Bash(PORT=3001 npm run dev)",
+      "Bash(cat:*)",
+      "Bash(pip show:*)",
+      "Bash(uvicorn:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

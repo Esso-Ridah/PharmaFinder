@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Cart Functionality</title>
+</head>
+<body>
+    <h1>Test Cart Authentication</h1>
+    <button onclick="setToken()">Set Test Token</button>
+    <button onclick="testCartAPI()">Test Cart API</button>
+    <button onclick="addItemToCart()">Add Test Item</button>
+    <div id="results"></div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000';
+        const TEST_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlckBleGFtcGxlLmNvbSIsImV4cCI6MTc1OTMzOTY4MH0.JxYF9Oii3lNsDSuGZQkLhTD0YhzRWRHAwh9QQife_hI';
+
+        function setToken() {
+            localStorage.setItem('access_token', TEST_TOKEN);
+            document.getElementById('results').innerHTML += '<p>✅ Token set in localStorage</p>';
+        }
+
+        async function testCartAPI() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                document.getElementById('results').innerHTML += '<p>❌ No token found. Click "Set Test Token" first.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/cart/items`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('results').innerHTML += `<p>✅ Cart API works! Items: ${JSON.stringify(data)}</p>`;
+                } else {
+                    document.getElementById('results').innerHTML += `<p>❌ Cart API failed: ${response.status} ${response.statusText}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML += `<p>❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function addItemToCart() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                document.getElementById('results').innerHTML += '<p>❌ No token found. Click "Set Test Token" first.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/cart/items`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        product_id: 'test-product-123',
+                        pharmacy_id: 'test-pharmacy-456',
+                        quantity: 1
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('results').innerHTML += `<p>✅ Item added to cart! Response: ${JSON.stringify(data)}</p>`;
+                } else {
+                    const errorData = await response.text();
+                    document.getElementById('results').innerHTML += `<p>❌ Add to cart failed: ${response.status} ${errorData}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML += `<p>❌ Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
