@@ -14,12 +14,8 @@
 --
 -- UTILISATION:
 -- Pour SQLite: sqlite3 pharmafinder.db < init_production_db.sql
--- Pour PostgreSQL: psql -U user -d pharmafinder < init_production_db.sql (après adaptation)
 --
 -- ============================================
-
-PRAGMA foreign_keys=OFF;
-BEGIN TRANSACTION;
 
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
@@ -474,6 +470,3 @@ CREATE INDEX ix_orders_client_id ON orders (client_id);
 CREATE UNIQUE INDEX ix_orders_order_number ON orders (order_number);
 CREATE INDEX ix_orders_created_at ON orders (created_at);
 COMMIT;
-
-COMMIT;
-PRAGMA foreign_keys=ON;
