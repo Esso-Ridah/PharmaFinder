@@ -139,11 +139,132 @@ sqlite3 pharmafinder.db < ../init_production_db.sql
 - Au moins 2 GB RAM
 - Ports ouverts : 80, 443, 3000, 8001
 
+---
+
+## ⚡ Option 1 : Installation Automatique (Recommandée)
+
+### Script de déploiement en une commande
+
+Le script `deploy.sh` gère automatiquement toute l'installation :
+
+```bash
+# Se connecter à l'instance
+ssh ubuntu@<votre-ip-lightsail>
+
+# Télécharger et exécuter le script
+curl -fsSL https://raw.githubusercontent.com/Esso-Ridah/PharmaFinder/main/deploy.sh -o deploy.sh
+chmod +x deploy.sh
+./deploy.sh
+```
+
+### Le script offre deux modes d'installation :
+
+1. **Docker (Recommandé)** - Installation rapide avec conteneurs
+2. **Manuel** - Installation avec PM2 + Nginx
+
+### Ce que le script fait automatiquement :
+
+✅ Mise à jour du système
+✅ Installation des dépendances (Docker/Node/Python)
+✅ Clonage du repository
+✅ Configuration des variables d'environnement
+✅ Initialisation de la base de données
+✅ Déploiement de l'application
+✅ Configuration du pare-feu
+
+**Durée estimée :** 5-10 minutes
+
+---
+
+## 🐳 Option 2 : Installation manuelle avec Docker
+
 ### Étape 1 : Se connecter à l'instance
 
 ```bash
 ssh ubuntu@<votre-ip-lightsail>
 ```
+
+### Étape 2 : Installer Docker et Docker Compose
+
+```bash
+# Installer Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+# Installer Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Se déconnecter et reconnecter pour appliquer les permissions
+exit
+ssh ubuntu@<votre-ip-lightsail>
+```
+
+### Étape 3 : Cloner le repository
+
+```bash
+git clone https://github.com/Esso-Ridah/PharmaFinder.git
+cd PharmaFinder
+```
+
+### Étape 4 : Configurer les variables d'environnement
+
+```bash
+# Créer backend/.env
+cp backend/.env.example backend/.env
+nano backend/.env
+# Modifier les valeurs selon APIKEYS.md
+
+# Créer frontend/.env.local
+nano frontend/.env.local
+# Ajouter:
+# NEXT_PUBLIC_API_URL=http://<votre-ip>:8001
+# NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
+
+### Étape 5 : Initialiser la base de données
+
+```bash
+cd backend
+sqlite3 pharmafinder.db < ../init_production_db.sql
+mkdir -p uploads/prescriptions
+cd ..
+```
+
+### Étape 6 : Démarrer avec Docker Compose
+
+```bash
+# Build et démarrage
+docker-compose -f docker-compose.production.yml build
+docker-compose -f docker-compose.production.yml up -d
+
+# Vérifier le statut
+docker-compose -f docker-compose.production.yml ps
+
+# Voir les logs
+docker-compose -f docker-compose.production.yml logs -f
+```
+
+### Commandes Docker utiles
+
+```bash
+# Voir les logs
+docker-compose -f docker-compose.production.yml logs -f [service]
+
+# Redémarrer
+docker-compose -f docker-compose.production.yml restart
+
+# Arrêter
+docker-compose -f docker-compose.production.yml down
+
+# Rebuild après modifications
+docker-compose -f docker-compose.production.yml up -d --build
+```
+
+---
+
+## 🔧 Option 3 : Installation manuelle sans Docker
 
 ### Étape 2 : Installer les dépendances
 
