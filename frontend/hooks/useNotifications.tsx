@@ -252,10 +252,18 @@ export const NotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
     notifications,
     unreadCount,
     isLoading: isAuthenticated ? isLoading : false,
-    markAsRead: (notificationId: string) => markAsReadMutation.mutateAsync(notificationId),
-    markAllAsRead: () => markAllAsReadMutation.mutateAsync(),
-    deleteNotification: (notificationId: string) => deleteNotificationMutation.mutateAsync(notificationId),
-    clearAll: () => clearAllMutation.mutateAsync(),
+    markAsRead: async (notificationId: string) => {
+      await markAsReadMutation.mutateAsync(notificationId);
+    },
+    markAllAsRead: async () => {
+      await markAllAsReadMutation.mutateAsync();
+    },
+    deleteNotification: async (notificationId: string) => {
+      await deleteNotificationMutation.mutateAsync(notificationId);
+    },
+    clearAll: async () => {
+      await clearAllMutation.mutateAsync();
+    },
     refetch: () => refetch(),
     expiredModalData,
     closeExpiredModal,
