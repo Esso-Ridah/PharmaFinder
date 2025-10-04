@@ -173,8 +173,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user: currentUser,
     isLoading: shouldShowLoading,
     isAuthenticated: !!currentUser && tokenManager.isAuthenticated(),
-    login: loginMutation.mutateAsync,
-    register: registerMutation.mutateAsync,
+    login: async (credentials: LoginCredentials) => {
+      await loginMutation.mutateAsync(credentials);
+    },
+    register: async (userData: UserCreate) => {
+      await registerMutation.mutateAsync(userData);
+    },
     logout,
     refetchUser: () => refetchUser(),
   };
