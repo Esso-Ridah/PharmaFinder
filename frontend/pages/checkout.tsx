@@ -115,7 +115,7 @@ const CheckoutPage = () => {
 
       // Check for distance/city warnings
       const warnings = response.data.warnings || [];
-      const distanceWarnings = warnings.filter(warning =>
+      const distanceWarnings = warnings.filter((warning: string) =>
         warning.includes('⚠️') || warning.includes('📍') || warning.includes('distance') || warning.includes('villes différentes')
       );
 
