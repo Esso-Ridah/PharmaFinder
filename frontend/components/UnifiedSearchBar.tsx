@@ -519,7 +519,7 @@ const UnifiedSearchBar: React.FC<UnifiedSearchBarProps> = ({
 
         console.log('🧹 Cleaned Text:', cleanedText);
 
-        const words = cleanedText.split(' ').filter(word => word.length > 2);
+        const words = cleanedText.split(' ').filter((word: string) => word.length > 2);
 
         // Approche "Google" : Combiner TOUS les éléments pertinents
         const relevantTerms = {
