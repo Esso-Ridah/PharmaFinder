@@ -29,7 +29,7 @@ const PharmaciesPage: React.FC = () => {
     pharmacy.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const formatOpeningHours = (hours: Record<string, string> | null) => {
+  const formatOpeningHours = (hours: Record<string, string> | null | undefined) => {
     if (!hours) return 'Horaires non disponibles';
     
     const today = new Date().toLocaleDateString('fr-FR', { weekday: 'long' }).toLowerCase();

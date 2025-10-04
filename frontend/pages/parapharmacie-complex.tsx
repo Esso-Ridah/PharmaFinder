@@ -3,17 +3,17 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { api, Product, Category } from '../lib/api';
-import { 
-  SparklesIconIcon, 
-  BeakerIcon, 
-  HeartIconIcon, 
-  SunIconIcon, 
-  ShoppingBagIconIcon, 
+import {
+  SparklesIcon,
+  BeakerIcon,
+  HeartIcon,
+  SunIcon,
+  ShoppingBagIcon,
   FunnelIcon,
   MagnifyingGlassIcon,
-  StarIconIcon,
-  MapPinIconIcon,
-  PlusIconIcon
+  StarIcon,
+  MapPinIcon,
+  PlusIcon
 } from '@heroicons/react/24/outline';
 
 interface ParapharmacyCategory {

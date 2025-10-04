@@ -40,7 +40,7 @@ const ProductOrderPage: React.FC = () => {
   // Fetch product details
   const { data: product, isLoading: productLoading } = useQuery(
     ['product', id],
-    () => api.products.get(id as string).then(res => res.data),
+    () => api.products.getById(id as string).then(res => res.data),
     {
       enabled: !!id,
       staleTime: 5 * 60 * 1000, // 5 minutes
@@ -81,7 +81,7 @@ const ProductOrderPage: React.FC = () => {
     setShowConfirmation(true);
   };
 
-  const selectedPharmacyData = availability.find(a => a.pharmacy.id === selectedPharmacy);
+  const selectedPharmacyData = availability.find(a => a.pharmacy_id === selectedPharmacy);
   const estimatedPrice = selectedPharmacyData?.price || 0;
   const deliveryFee = deliveryType === 'delivery' ? 1500 : 0;
   const totalPrice = (estimatedPrice * quantity) + deliveryFee;
