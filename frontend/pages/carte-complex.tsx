@@ -87,7 +87,10 @@ const CartePage: NextPage = () => {
   const initializeMap = () => {
     if (!window.google || !userLocation) return;
 
-    const map = new window.google.maps.Map(document.getElementById('map'), {
+    const mapElement = document.getElementById('map');
+    if (!mapElement) return;
+
+    const map = new window.google.maps.Map(mapElement, {
       center: userLocation,
       zoom: 12,
       styles: [
