@@ -56,11 +56,11 @@ const getMatchScore = (text: string, query: string): number => {
 };
 
 // Helper function to filter and sort items by relevance
-const filterAndSortByRelevance = <T>(
+function filterAndSortByRelevance<T>(
   items: T[],
   query: string,
   getTextFields: (item: T) => string[]
-): T[] => {
+): T[] {
   if (!query.trim()) return items;
 
   return items
@@ -71,7 +71,7 @@ const filterAndSortByRelevance = <T>(
     .filter(({ score }) => score > 0)
     .sort((a, b) => b.score - a.score)
     .map(({ item }) => item);
-};
+}
 
 const UnifiedSearchBar: React.FC<UnifiedSearchBarProps> = ({
   onSelect,
