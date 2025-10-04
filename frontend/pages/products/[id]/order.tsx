@@ -218,9 +218,9 @@ const ProductOrderPage: React.FC = () => {
                   <div className="space-y-3">
                     {availability.map((item) => (
                       <label
-                        key={item.pharmacy.id}
+                        key={item.pharmacy_id}
                         className={`block p-4 border rounded-lg cursor-pointer transition-all ${
-                          selectedPharmacy === item.pharmacy.id
+                          selectedPharmacy === item.pharmacy_id
                             ? 'border-primary-500 bg-primary-50'
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
@@ -228,39 +228,34 @@ const ProductOrderPage: React.FC = () => {
                         <input
                           type="radio"
                           name="pharmacy"
-                          value={item.pharmacy.id}
-                          checked={selectedPharmacy === item.pharmacy.id}
+                          value={item.pharmacy_id}
+                          checked={selectedPharmacy === item.pharmacy_id}
                           onChange={(e) => setSelectedPharmacy(e.target.value)}
                           className="sr-only"
                         />
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <h3 className="font-medium text-gray-900">{item.pharmacy.name}</h3>
+                            <h3 className="font-medium text-gray-900">{item.pharmacy_name}</h3>
                             <p className="text-sm text-gray-500 flex items-center mt-1">
                               <MapPinIcon className="h-4 w-4 mr-1" />
-                              {item.pharmacy.address}
+                              {item.pharmacy_address}
                             </p>
-                            {item.pharmacy.phone && (
+                            {item.pharmacy_phone && (
                               <p className="text-sm text-gray-500 flex items-center mt-1">
                                 <PhoneIcon className="h-4 w-4 mr-1" />
-                                {item.pharmacy.phone}
+                                {item.pharmacy_phone}
                               </p>
                             )}
                             <div className="flex items-center mt-2 space-x-4">
                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                                item.stock > 10 
-                                  ? 'bg-green-100 text-green-800' 
-                                  : item.stock > 0 
+                                item.quantity > 10
+                                  ? 'bg-green-100 text-green-800'
+                                  : item.quantity > 0
                                     ? 'bg-yellow-100 text-yellow-800'
                                     : 'bg-red-100 text-red-800'
                               }`}>
-                                {item.stock > 0 ? `${item.stock} en stock` : 'Rupture de stock'}
+                                {item.quantity > 0 ? `${item.quantity} en stock` : 'Rupture de stock'}
                               </span>
-                              {item.pharmacy.is_verified && (
-                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                  Vérifiée
-                                </span>
-                              )}
                             </div>
                           </div>
                           <div className="text-right ml-4">
@@ -450,12 +445,12 @@ const ProductOrderPage: React.FC = () => {
                   <div className="mt-6">
                     <h3 className="font-medium text-gray-900 mb-2">Pharmacie sélectionnée</h3>
                     <div className="text-sm text-gray-600">
-                      <p className="font-medium">{selectedPharmacyData?.pharmacy.name}</p>
-                      <p>{selectedPharmacyData?.pharmacy.address}</p>
-                      {selectedPharmacyData?.pharmacy.phone && (
+                      <p className="font-medium">{selectedPharmacyData?.pharmacy_name}</p>
+                      <p>{selectedPharmacyData?.pharmacy_address}</p>
+                      {selectedPharmacyData?.pharmacy_phone && (
                         <p className="flex items-center mt-1">
                           <PhoneIcon className="h-4 w-4 mr-1" />
-                          {selectedPharmacyData.pharmacy.phone}
+                          {selectedPharmacyData.pharmacy_phone}
                         </p>
                       )}
                     </div>
@@ -490,7 +485,7 @@ const ProductOrderPage: React.FC = () => {
           orderDetails={{
             id: `CMD-${Date.now()}`,
             total: totalPrice,
-            pharmacy: selectedPharmacyData.pharmacy.name,
+            pharmacy: selectedPharmacyData.pharmacy_name,
             products: [{
               name: product.name,
               quantity: quantity,
