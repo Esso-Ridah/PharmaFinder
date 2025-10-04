@@ -174,15 +174,14 @@ const CartePage: NextPage = () => {
 
   const formatOpeningHours = (hours: Record<string, string> | undefined) => {
     if (!hours) return 'Horaires non disponibles';
-    
-    const today = new Date().toLocaleLowerCase();
+
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const dayNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-    
+
     const todayIndex = new Date().getDay();
     const todayKey = days[todayIndex];
     const todayHours = hours[todayKey] || 'Fermé';
-    
+
     return `Aujourd'hui: ${todayHours}`;
   };
 
