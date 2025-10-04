@@ -199,7 +199,7 @@ const CheckoutPage = () => {
       const response = await api.cart.createMultiOrder({
         delivery_type: deliveryType,
         payment_method: paymentMethod,
-        address_id: deliveryAddressId,
+        address_id: deliveryAddressId ?? undefined,
         notes: validation?.requires_duplication
           ? `Commande multiple - ${validation.total_deliveries} pharmacies - Paiement: ${paymentIntentId}`
           : `Paiement: ${paymentIntentId}`
