@@ -147,6 +147,13 @@ export interface Product {
   min_price?: number;
   is_sponsored?: boolean;
   sponsor_rank?: number;
+  sponsored_pharmacy?: {
+    id: string;
+    name: string;
+    address?: string;
+    city?: string;
+    phone?: string;
+  };
 }
 
 export interface Category {
