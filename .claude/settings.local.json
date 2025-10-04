@@ -22,7 +22,8 @@
       "Bash(PORT=3001 npm run dev)",
       "Bash(cat:*)",
       "Bash(pip show:*)",
-      "Bash(uvicorn:*)"
+      "Bash(uvicorn:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []

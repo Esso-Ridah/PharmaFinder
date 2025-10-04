@@ -9,7 +9,6 @@ import {
   ClockIcon,
   BuildingStorefrontIcon,
   ExclamationTriangleIcon,
-  LocationArrowIcon,
   FunnelIcon,
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
@@ -154,7 +153,7 @@ const MapPage: React.FC = () => {
                   </div>
                 ) : latitude && longitude ? (
                   <div className="flex items-center text-green-600">
-                    <LocationArrowIcon className="h-4 w-4 mr-2" />
+                    <MapPinIcon className="h-4 w-4 mr-2" />
                     <span className="text-sm">Position détectée</span>
                   </div>
                 ) : (
@@ -169,7 +168,7 @@ const MapPage: React.FC = () => {
                       onClick={requestLocation}
                       className="btn-outline btn-sm"
                     >
-                      <LocationArrowIcon className="h-4 w-4 mr-1" />
+                      <MapPinIcon className="h-4 w-4 mr-1" />
                       Localiser
                     </button>
                   </div>
@@ -417,7 +416,7 @@ const MapPage: React.FC = () => {
                   className="btn-outline"
                   disabled={locationLoading}
                 >
-                  <LocationArrowIcon className="h-4 w-4 mr-2" />
+                  <MapPinIcon className="h-4 w-4 mr-2" />
                   {locationLoading ? 'Localisation...' : 'Me localiser'}
                 </button>
               </div>
