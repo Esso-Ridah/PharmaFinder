@@ -555,7 +555,7 @@ const UnifiedSearchBar: React.FC<UnifiedSearchBarProps> = ({
         ];
 
         // Classer chaque mot dans sa catégorie
-        words.forEach(word => {
+        words.forEach((word: string) => {
           const lowerWord = word.toLowerCase();
 
           // 1. Principes actifs (priorité haute)
