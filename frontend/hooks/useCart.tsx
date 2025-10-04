@@ -145,7 +145,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       price?: number;
     }) => {
       if (isAuthenticated) {
-        return api.cart.addItem({ product_id: productId, pharmacy_id: pharmacyId, quantity });
+        await api.cart.addItem({ product_id: productId, pharmacy_id: pharmacyId, quantity });
       } else {
         // For non-authenticated users, use provided data or fetch if not available
         try {
@@ -237,8 +237,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
               return [...prev, newItem];
             }
           });
-
-          return Promise.resolve();
         } catch (error) {
           console.error('Failed to add item to local cart:', error);
           throw error;
@@ -271,18 +269,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Update quantity mutation
   const updateQuantityMutation = useMutation(
-    ({ itemId, quantity }: { itemId: string; quantity: number }) => {
+    async ({ itemId, quantity }: { itemId: string; quantity: number }) => {
       if (isAuthenticated) {
-        return api.cart.updateItem(itemId, { quantity });
+        await api.cart.updateItem(itemId, { quantity });
       } else {
-        return new Promise<void>((resolve) => {
-          setLocalCart(prev =>
-            prev.map(item =>
-              item.id === itemId ? { ...item, quantity } : item
-            )
-          );
-          resolve();
-        });
+        setLocalCart(prev =>
+          prev.map(item =>
+            item.id === itemId ? { ...item, quantity } : item
+          )
+        );
       }
     },
     {
@@ -301,14 +296,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Remove from cart mutation
   const removeFromCartMutation = useMutation(
-    (itemId: string) => {
+    async (itemId: string) => {
       if (isAuthenticated) {
-        return api.cart.removeItem(itemId);
+        await api.cart.removeItem(itemId);
       } else {
-        return new Promise<void>((resolve) => {
-          setLocalCart(prev => prev.filter(item => item.id !== itemId));
-          resolve();
-        });
+        setLocalCart(prev => prev.filter(item => item.id !== itemId));
       }
     },
     {
@@ -327,15 +319,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Clear cart mutation
   const clearCartMutation = useMutation(
-    () => {
+    async () => {
       if (isAuthenticated) {
-        return api.cart.clear();
+        await api.cart.clear();
       } else {
-        return new Promise<void>((resolve) => {
-          setLocalCart([]);
-          localStorage.removeItem('pharma_cart');
-          resolve();
-        });
+        setLocalCart([]);
+        localStorage.removeItem('pharma_cart');
       }
     },
     {
